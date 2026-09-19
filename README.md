@@ -162,7 +162,7 @@ enterprise-ai-copilot/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Sh1vamJaiswal/enterprise-ai-copilot.git
+git clone https://github.com/Alieno1/enterprise-ai-copilot.git
 cd enterprise-ai-copilot
 ```
 
@@ -309,8 +309,8 @@ Potential extensions include:
 
 ## Author
 
-**Shivam Jaiswal**
+**Himanshu Singh**
 
 Computer Science | AI/ML | Generative AI | Agentic AI | Computer Vision
 
-GitHub: https://github.com/Sh1vamJaiswal
+GitHub: https://github.com/Alieno1
