@@ -1,4 +1,4 @@
-# 🚀 Enterprise AI Operations Copilot
+# Enterprise AI Operations Copilot
 
 Welcome to the **Enterprise AI Operations Copilot**! This is a smart, enterprise-ready AI assistant that acts as a virtual IT and HR helper. 
 
@@ -6,16 +6,16 @@ It handles everything from answering questions based on your company's internal 
 
 ---
 
-## 🌟 What Does It Do?
+## What Does It Do?
 
-- 📚 **Reads Company Policies:** It securely reads your internal markdown documents and answers questions based *only* on that verified info.
-- 💳 **Calculates Expenses:** You can ask it to calculate travel expenses with tax, and it uses a built-in calculator tool mathematically.
-- 🎫 **IT Support:** It can automatically generate IT support tickets and look up ticket statuses for employees.
-- 🚫 **No Hallucinations:** If it doesn't know the answer, it tells you, instead of making things up!
+- **Reads Company Policies:** It securely reads your internal markdown documents and answers questions based *only* on that verified info.
+- **Calculates Expenses:** You can ask it to calculate travel expenses with tax, and it uses a built-in calculator tool mathematically.
+- **IT Support:** It can automatically generate IT support tickets and look up ticket statuses for employees.
+- **No Hallucinations:** If it doesn't know the answer, it tells you, instead of making things up!
 
 ---
 
-## 🏗️ How It Works (The Tech Stack)
+## How It Works (The Tech Stack)
 
 This project is built using modern, industry-standard AI tools:
 - **Google Gemini** (`gemini-3.6-flash`) for the core brain and tool-calling.
@@ -26,7 +26,7 @@ This project is built using modern, industry-standard AI tools:
 
 ---
 
-## 💻 Quickstart: How to Run This Project
+## Quickstart: How to Run This Project
 
 Follow these exact steps to get the AI Copilot running on your local machine in less than 2 minutes!
 
@@ -63,7 +63,7 @@ Run this script to let the AI read, chunk, and index the sample company document
 python scripts/build_vectorstore.py
 ```
 
-### Step 6: Launch the App! 🎉
+### Step 6: Launch the App
 Start up the web interface:
 ```bash
 streamlit run app/ui/app.py
@@ -72,13 +72,13 @@ Click the link it gives you (usually `http://localhost:8501`) and start chatting
 
 ---
 
-## 🧪 Testing the AI (For Developers)
+## Testing the AI (For Developers)
 Want to inspect the logic under the hood? The project is fully tested. Just run:
 ```bash
 PYTHONPATH=. pytest tests/
 ```
 
-## 👨‍💻 Author
+## Author
 **Himanshu Singh**  
 *Computer Science | AI/ML | Generative AI | Agentic AI | Computer Vision*  
 GitHub: [Alieno1](https://github.com/Alieno1)
