@@ -1,149 +1,84 @@
-# Enterprise AI Operations Copilot
+# 🚀 Enterprise AI Operations Copilot
 
-An enterprise-focused AI assistant that combines **Retrieval-Augmented Generation (RAG)** with **agentic tool calling** to answer internal policy questions and perform operational tasks seamlessly.
+Welcome to the **Enterprise AI Operations Copilot**! This is a smart, enterprise-ready AI assistant that acts as a virtual IT and HR helper. 
 
-## Overview
+It handles everything from answering questions based on your company's internal documents to performing real actions (like calculating expenses or raising IT support tickets) all through a friendly chat interface.
 
-The Enterprise AI Operations Copilot is a prototype designed to demonstrate how an enterprise AI assistant can:
+---
 
-- Answer questions from internal company documents using RAG.
-- Ground responses in retrieved knowledge-base content.
-- Create IT support tickets through an AI-selected tool.
-- Check the status of existing IT tickets.
-- Calculate business expenses with tax.
-- Avoid inventing information when the knowledge base does not contain an answer.
-- Provide a simple conversational interface through Streamlit.
+## 🌟 What Does It Do?
 
-## Architecture & Tech Stack
+- 📚 **Reads Company Policies:** It securely reads your internal markdown documents and answers questions based *only* on that verified info.
+- 💳 **Calculates Expenses:** You can ask it to calculate travel expenses with tax, and it uses a built-in calculator tool mathematically.
+- 🎫 **IT Support:** It can automatically generate IT support tickets and look up ticket statuses for employees.
+- 🚫 **No Hallucinations:** If it doesn't know the answer, it tells you, instead of making things up!
 
-This project uses a professional, layered architectural pattern designed for scalability and testing.
+---
 
-- **Orchestration**: LangChain, Python
-- **LLM Engine**: Google Gemini API (`gemini-3.6-flash`) via `langchain-google-genai`
-- **Vector Database**: ChromaDB (locally persisted)
-- **Embeddings**: Hugging Face Sentence Transformers
-- **Frontend UI**: Streamlit
-- **Testing**: Pytest & Pytest-Mock
+## 🏗️ How It Works (The Tech Stack)
 
-```text
-                    ┌─────────────────────────┐
-                    │       Streamlit UI      │
-                    │       Chat Interface    │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │     Agent Orchestrator  │
-                    │   Google Gemini + Tools │
-                    └────────────┬────────────┘
-                                 │
-                    ┌────────────┴────────────┐
-                    │                         │
-                    ▼                         ▼
-             Knowledge Base              Action Tools
-                  / RAG                       │
-                    │                  ┌──────┼─────────┐
-                    ▼                  ▼      ▼         ▼
-              ChromaDB             Create   Check    Expense
-                    │               Ticket  Status   Calculator
-                    ▼
-          Hugging Face Embeddings
-                    │
-                    ▼
-          Enterprise Markdown Docs
-```
+This project is built using modern, industry-standard AI tools:
+- **Google Gemini** (`gemini-3.6-flash`) for the core brain and tool-calling.
+- **LangChain** for orchestrating the AI logic and tools.
+- **ChromaDB & Hugging Face** for securely storing and searching your company documents locally.
+- **Streamlit** for the beautiful, easy-to-use web chat interface.
+- **Pytest** for running automated unit tests on the code to ensure it's bug-free.
 
-## Project Structure
+---
 
-```text
-enterprise-ai-copilot/
-│
-├── app/
-│   ├── agent/          # Orchestrator and logic handling
-│   ├── core/           # Configuration, exceptions, and logging
-│   ├── knowledge/      # RAG pipeline, loaders, and ChromaDB connection
-│   ├── llm/            # LLM initialization and embeddings layer
-│   ├── tools/          # IT & Expense standalone tool registry
-│   └── ui/             # Streamlit web interface
-│
-├── data/               # Vectorstore output and raw docs
-├── scripts/            # Script to build vectorstore database
-├── tests/              # Pytest mocking and validation suite
-│
-├── .env                # API Keys
-├── requirements.txt    # Python dependencies
-└── README.md
-```
+## 💻 Quickstart: How to Run This Project
 
-## Setup & Deployment
+Follow these exact steps to get the AI Copilot running on your local machine in less than 2 minutes!
 
-### 1. Clone the repository
-
+### Step 1: Download the Code
+Open your terminal and clone this repository down to your computer:
 ```bash
 git clone https://github.com/Alieno1/enterprise-ai-copilot.git
 cd enterprise-ai-copilot
 ```
 
-### 2. Create a virtual environment
-
+### Step 2: Set Up the Environment
+Create an isolated Python environment so it doesn't interfere with your computer:
 ```bash
 python -m venv .venv
-source .venv/bin/activate    # Linux/Mac
-# .venv\Scripts\Activate     # Windows
+source .venv/bin/activate    # (If you are on Windows, run: .venv\Scripts\Activate)
 ```
 
-### 3. Install dependencies
-
+### Step 3: Install Requirements
+Install all the AI and web frameworks we need:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configure the Google API key
-
-Create a `.env` file in the project root:
-
+### Step 4: Add Your Google API Key
+Create a new file named `.env` in the main folder and paste your Google Gemini API Key inside it like this:
 ```text
 GOOGLE_API_KEY=your_gemini_api_key_here
 ```
+*(Need a key? Get one for free at https://aistudio.google.com/app/apikey)*
 
-### 5. Build the vector store
-
-Run the compilation script to chunk and embed all the markdown data:
-
+### Step 5: Build the Copilot's Brain
+Run this script to let the AI read, chunk, and index the sample company documents:
 ```bash
 python scripts/build_vectorstore.py
 ```
 
-### 6. Run the application
-
-Ensure your virtual environment is activated and start up Streamlit:
-
+### Step 6: Launch the App! 🎉
+Start up the web interface:
 ```bash
 streamlit run app/ui/app.py
 ```
-Open the local URL shown in the terminal (usually `http://localhost:8501`).
+Click the link it gives you (usually `http://localhost:8501`) and start chatting!
 
-### 7. Run the automated test suite
-The infrastructure is heavily tested across 4 domains (Agent, Config, RAG, Tools). Run:
+---
 
+## 🧪 Testing the AI (For Developers)
+Want to inspect the logic under the hood? The project is fully tested. Just run:
 ```bash
 PYTHONPATH=. pytest tests/
 ```
 
-## Example Queries
-
-Try asking the assistant these questions once the app is loaded:
-
-- **RAG lookup**: "How many paid annual leave days do employees receive?"
-- **IT action**: "My employee ID is EMP123 and my laptop screen cracked. Create a high priority IT ticket."
-- **Status check**: "What is the current status of IT-2048-001?"
-- **Expense math**: "I spent 2500 on a hotel during a business trip. Calculate the expense with 18 percent tax."
-- **Unknown bounds**: "What is the company policy for international business travel reimbursement?" *(The bot will explicitly say it doesn't know rather than hallucinate).*
-
-## Author
-
-**Himanshu Singh**
-
-Computer Science | AI/ML | Generative AI | Agentic AI | Computer Vision
-
-GitHub: https://github.com/Alieno1
+## 👨‍💻 Author
+**Himanshu Singh**  
+*Computer Science | AI/ML | Generative AI | Agentic AI | Computer Vision*  
+GitHub: [Alieno1](https://github.com/Alieno1)
