@@ -1,0 +1,10 @@
+langchain
+langchain-google-genai
+langchain-community
+langchain-chroma
+langchain-huggingface
+langchain-text-splitters
+chromadb
+sentence-transformers
+python-dotenv
+streamlit\npytest==8.1.1\npytest-mock==3.14.0
