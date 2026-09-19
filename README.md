@@ -1,316 +1,84 @@
 # Enterprise AI Operations Copilot
 
-An enterprise-focused AI assistant that combines **Retrieval-Augmented Generation (RAG)** with **agentic tool calling** to answer internal policy questions and perform operational tasks.
+Welcome to the **Enterprise AI Operations Copilot**! This is a smart, enterprise-ready AI assistant that acts as a virtual IT and HR helper. 
 
-## Overview
+It handles everything from answering questions based on your company's internal documents to performing real actions (like calculating expenses or raising IT support tickets) all through a friendly chat interface.
 
-The Enterprise AI Operations Copilot is a prototype designed to demonstrate how an enterprise AI assistant can:
+---
 
-- Answer questions from internal company documents using RAG.
-- Ground responses in retrieved knowledge-base content.
-- Create IT support tickets through an AI-selected tool.
-- Check the status of existing IT tickets.
-- Calculate business expenses with tax.
-- Avoid inventing information when the knowledge base does not contain an answer.
-- Provide a simple conversational interface through Streamlit.
+## What Does It Do?
 
-The enterprise documents and operational tools in this project are **synthetic/demo data** intended for demonstration purposes.
+- **Reads Company Policies:** It securely reads your internal markdown documents and answers questions based *only* on that verified info.
+- **Calculates Expenses:** You can ask it to calculate travel expenses with tax, and it uses a built-in calculator tool mathematically.
+- **IT Support:** It can automatically generate IT support tickets and look up ticket statuses for employees.
+- **No Hallucinations:** If it doesn't know the answer, it tells you, instead of making things up!
 
-## Architecture
+---
 
-```text
-                    ┌─────────────────────────┐
-                    │       Streamlit UI      │
-                    │       Chat Interface    │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │     Agent / LLM Layer   │
-                    │   OpenRouter + LangChain│
-                    └────────────┬────────────┘
-                                 │
-                    ┌────────────┴────────────┐
-                    │                         │
-                    ▼                         ▼
-             Knowledge Base              Action Tools
-                  / RAG                       │
-                    │                  ┌──────┼─────────┐
-                    ▼                  ▼      ▼         ▼
-              ChromaDB             Create   Check    Expense
-                    │               Ticket  Status   Calculator
-                    ▼
-          Hugging Face Embeddings
-                    │
-                    ▼
-          Enterprise Markdown Docs
-```
+## How It Works (The Tech Stack)
 
-## RAG Pipeline
+This project is built using modern, industry-standard AI tools:
+- **Google Gemini** (`gemini-3.6-flash`) for the core brain and tool-calling.
+- **LangChain** for orchestrating the AI logic and tools.
+- **ChromaDB & Hugging Face** for securely storing and searching your company documents locally.
+- **Streamlit** for the beautiful, easy-to-use web chat interface.
+- **Pytest** for running automated unit tests on the code to ensure it's bug-free.
 
-The knowledge-base workflow follows:
+---
 
-```text
-Enterprise Documents
-        ↓
-Document Loading
-        ↓
-Recursive Chunking
-        ↓
-Hugging Face Embeddings
-        ↓
-ChromaDB Vector Store
-        ↓
-Similarity Search
-        ↓
-Retrieved Context
-        ↓
-LLM
-        ↓
-Grounded Answer + Sources
-```
+## Quickstart: How to Run This Project
 
-The assistant is instructed to avoid fabricating policies when the requested information is not present in the knowledge base.
+Follow these exact steps to get the AI Copilot running on your local machine in less than 2 minutes!
 
-## Agentic Workflow
-
-The LLM is provided with several tools and decides which tool is appropriate based on the user's request.
-
-### Available tools
-
-#### `create_it_ticket`
-
-Creates a demo IT support ticket using:
-
-- Employee ID
-- Issue description
-- Priority
-
-Example:
-
-```text
-My employee ID is EMP3050 and my laptop is completely broken.
-Create a high priority IT ticket.
-```
-
-#### `check_ticket_status`
-
-Checks the status of a demo IT ticket.
-
-Example:
-
-```text
-What is the current status of IT-2048-001?
-```
-
-#### `calculate_expense`
-
-Calculates an expense including a percentage-based tax.
-
-Example:
-
-```text
-I spent 2500 on a hotel during a business trip.
-Calculate the expense with 18 percent tax.
-```
-
-#### `search_knowledge_base`
-
-Searches the enterprise knowledge base and returns an answer grounded in the indexed company documents.
-
-## Tech Stack
-
-- **Python**
-- **LangChain**
-- **OpenRouter**
-- **Hugging Face Sentence Transformers**
-- **ChromaDB**
-- **Streamlit**
-- **python-dotenv**
-- **Git / GitHub**
-
-## Project Structure
-
-```text
-enterprise-ai-copilot/
-│
-├── app/
-│   ├── __init__.py
-│   ├── agent.py
-│   ├── config.py
-│   ├── embeddings.py
-│   ├── llm.py
-│   ├── loader.py
-│   ├── rag.py
-│   ├── splitting.py
-│   ├── tools.py
-│   ├── ui.py
-│   └── vectorstore.py
-│
-├── data/
-│   └── documents/
-│       ├── hr_policy.md
-│       └── it_support.md
-│
-├── test_llm.py
-├── .gitignore
-└── README.md
-```
-
-## Setup
-
-### 1. Clone the repository
-
+### Step 1: Download the Code
+Open your terminal and clone this repository down to your computer:
 ```bash
-git clone https://github.com/Sh1vamJaiswal/enterprise-ai-copilot.git
+git clone https://github.com/Alieno1/enterprise-ai-copilot.git
 cd enterprise-ai-copilot
 ```
 
-### 2. Create a virtual environment
-
-Windows:
-
-```powershell
+### Step 2: Set Up the Environment
+Create an isolated Python environment so it doesn't interfere with your computer:
+```bash
 python -m venv .venv
-.venv\Scripts\Activate.ps1
+source .venv/bin/activate    # (If you are on Windows, run: .venv\Scripts\Activate)
 ```
 
-### 3. Install dependencies
-
-Install the required packages used by the project:
-
-```powershell
-python -m pip install langchain langchain-openai langchain-community langchain-chroma langchain-huggingface sentence-transformers chromadb python-dotenv streamlit
+### Step 3: Install Requirements
+Install all the AI and web frameworks we need:
+```bash
+pip install -r requirements.txt
 ```
 
-### 4. Configure the API key
-
-Create a `.env` file in the project root:
-
+### Step 4: Add Your Google API Key
+Create a new file named `.env` in the main folder and paste your Google Gemini API Key inside it like this:
 ```text
-OPENROUTER_API_KEY=your_api_key_here
+GOOGLE_API_KEY=your_gemini_api_key_here
+```
+*(Need a key? Get one for free at https://aistudio.google.com/app/apikey)*
+
+### Step 5: Build the Copilot's Brain
+Run this script to let the AI read, chunk, and index the sample company documents:
+```bash
+python scripts/build_vectorstore.py
 ```
 
-The `.env` file is excluded from Git through `.gitignore`.
-
-### 5. Build the vector store
-
-```powershell
-python -c "from app.vectorstore import build_vectorstore; build_vectorstore(); print('Vector store built successfully.')"
+### Step 6: Launch the App
+Start up the web interface:
+```bash
+streamlit run app/ui/app.py
 ```
+Click the link it gives you (usually `http://localhost:8501`) and start chatting!
 
-### 6. Run the application
+---
 
-```powershell
-python -m streamlit run app/ui.py
+## Testing the AI (For Developers)
+Want to inspect the logic under the hood? The project is fully tested. Just run:
+```bash
+PYTHONPATH=. pytest tests/
 ```
-
-Then open the local Streamlit URL shown in the terminal, normally:
-
-```text
-http://localhost:8501
-```
-
-## Example Queries
-
-### Knowledge-base question
-
-```text
-How many paid annual leave days do employees receive?
-```
-
-Expected knowledge-base answer:
-
-```text
-Employees receive 18 days of paid annual leave per calendar year.
-```
-
-### IT support policy
-
-```text
-What are the standard IT support hours?
-```
-
-### IT ticket creation
-
-```text
-My employee ID is EMP3050 and my laptop is completely broken.
-Create a high priority IT ticket.
-```
-
-### Ticket status
-
-```text
-What is the current status of IT-2048-001?
-```
-
-### Expense calculation
-
-```text
-I spent 2500 on a hotel during a business trip.
-Calculate the expense with 18 percent tax.
-```
-
-### Unknown information
-
-```text
-What is the company policy for international business travel reimbursement?
-```
-
-The assistant should indicate that the available knowledge base does not contain the requested information rather than inventing a policy.
-
-## Design Considerations
-
-### Grounded generation
-
-The RAG component explicitly instructs the LLM to use the retrieved enterprise context and avoid inventing policies.
-
-### Tool determinism
-
-Operational tools such as ticket creation, ticket status, and expense calculation return their tool results directly. This prevents the final LLM response from adding unsupported operational claims.
-
-### Local vector storage
-
-ChromaDB is persisted locally under:
-
-```text
-data/chroma/
-```
-
-This generated directory is excluded from Git because it can be rebuilt from the source documents.
-
-## Limitations
-
-This is a prototype and uses synthetic enterprise data.
-
-- IT ticket operations are simulated rather than connected to a real ITSM platform.
-- Ticket data is stored in demo/static structures.
-- The knowledge base contains only a small set of example documents.
-- Authentication and authorization are not implemented.
-- Production monitoring, evaluation, and observability are not included.
-- The application is not designed to process confidential enterprise data in its current form.
-
-## Future Improvements
-
-Potential extensions include:
-
-- Integration with ServiceNow or another ITSM platform.
-- Enterprise authentication and role-based access control.
-- Larger document collections and metadata filtering.
-- Hybrid search combining keyword and semantic retrieval.
-- Reranking for improved retrieval accuracy.
-- Conversation memory.
-- Structured tool execution and approval workflows.
-- Automated RAG evaluation.
-- LangSmith or equivalent observability.
-- Docker-based deployment.
-- Cloud deployment with managed vector databases.
-- Guardrails and enterprise security controls.
 
 ## Author
-
-**Shivam Jaiswal**
-
-Computer Science | AI/ML | Generative AI | Agentic AI | Computer Vision
-
-GitHub: https://github.com/Sh1vamJaiswal
+**Himanshu Singh**  
+*Computer Science | AI/ML | Generative AI | Agentic AI | Computer Vision | Backend Engineer | Spring Boot | Distributed Systems*  
+GitHub: [Alieno1](https://github.com/Alieno1)
