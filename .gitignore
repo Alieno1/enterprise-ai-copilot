@@ -13,4 +13,4 @@ __pycache__/
 .idea/
 
 # Chroma vector database
-data/chroma/
+# data/chroma/
