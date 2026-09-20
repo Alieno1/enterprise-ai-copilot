@@ -95,11 +95,9 @@ PYTHONPATH=. pytest tests/
 
 ## Author
 
-**Himanshu Singh**  
+**Himanshu Singh**
 
-**Areas of Expertise:**
-- **Artificial Intelligence:** Computer Science, AI/ML, Generative AI, Agentic AI, Computer Vision
-- **Backend & Architecture:** Backend Engineering, Spring Boot, Distributed Systems
+**Computer Science | Backend Engineering | Java | Spring Boot | Distributed Systems | AI/ML | Generative AI | Agentic AI | Computer Vision**
 
 **Connect:**
 - GitHub: [Alieno1](https://github.com/Alieno1)
