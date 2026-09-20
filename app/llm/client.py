@@ -21,6 +21,7 @@ def get_llm() -> ChatOpenAI:
         model=settings.llm_model,
         api_key=settings.openrouter_api_key,
         base_url="https://openrouter.ai/api/v1",
+        max_tokens=1024,
     )
 
 
